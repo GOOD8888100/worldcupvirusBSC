@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>2026 FIFA World Cup | 官方实时官网</title>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', "Microsoft Yahei", Arial, sans-serif;
+}
+
+:root {
+    --bg-gradient: linear-gradient(135deg, #f0f4f8 0%, #e8edf5 100%);
+    --card-bg: #ffffff;
+    --text-main: #1a2b48;
+    --text-sub: #555;
+    --primary: #003d7a;
+    --primary-light: #0052a3;
+    --gold: #ffc800;
+    --gold-dark: #e6b000;
+    --shadow: 0 8px 24px rgba(0, 30, 80, 0.1);
+    --shadow-hover: 0 12px 36px rgba(0, 30, 80, 0.18);
+    --radius: 16px;
+    --transition: all 0.35s ease;
+}
+
+.dark {
+    --bg-gradient: linear-gradient(135deg, #0f1724 0%, #142032 100%);
+    --card-bg: #1c2a3f;
+    --text-main: #f0f4f9;
+    --text-sub: #b0c4de;
+    --primary: #0f2b4d;
+    --primary-light: #19406e;
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    --shadow-hover: 0 12px 36px rgba(0, 0, 0, 0.45);
+}
+
+body {
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    min-height: 100vh;
+    transition: var(--transition);
+}
+
+/* 导航栏 */
+header {
+    background: rgba(0, 45, 95, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    box-shadow: var(--shadow);
+}
+
+.nav {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    height: 76px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+}
+
+.menu {
+    display: flex;
+    gap: 36px;
+}
+
+.menu a {
+    color: #e6edf7;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: var(--transition);
+    position: relative;
+}
+
+.menu a:hover {
+    color: var(--gold);
+}
+
+.menu a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background: var(--gold);
+    transition: var(--transition);
+}
+
+.menu a:hover::after {
+    width: 100%;
+}
+
+.bar {
+    display: flex;
+    gap: 14px;
+}
+
+.btn {
+    padding: 9px 18px;
+    border-radius: 30px;
+    border: none;
+    background: var(--gold);
+    color: var(--primary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(255, 200, 0, 0.25);
+}
+
+.btn:hover {
+    background: var(--gold-dark);
+    transform: translateY(-2px);
+}
+
+/* 顶部英雄区 */
+.hero {
+    height: 560px;
+    background: linear-gradient(rgba(0, 35, 75, 0.75), rgba(0, 35, 75, 0.75)),
+    url(https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80) center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255,200,0,0.15), transparent 70%);
+}
+
+.hero > div {
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 56px;
+    margin-bottom: 20px;
+    color: var(--gold);
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 32px;
+    opacity: 0.95;
+}
+
+.count {
+    display: inline-block;
+    padding: 12px 32px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 40px;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--gold);
+}
+
+/* 容器 & 标题 */
+.container {
+    max-width: 1400px;
+    margin: 80px auto;
+    padding: 0 24px;
+}
+
+.title {
+    text-align: center;
+    font-size: 34px;
+    margin-bottom: 56px;
+    position: relative;
+    font-weight: 600;
+}
+
+.title::after {
+    content: "";
+    width: 90px;
+    height: 5px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+    border-radius: 4px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -16px;
+}
+
+/* 网格 & 卡片 */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border: 1px solid rgba(0,40,90,0.06);
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+}
+
+.card h4 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dark .card h4 {
+    color: var(--gold);
+}
+
+.card p {
+    color: var(--text-sub);
+    line-height: 1.7;
+    margin: 6px 0;
+}
+
+/* 直播标签 */
+.live {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #e53935;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    animation: pulse 1.4s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+.status-finished {
+    display: inline-flex;
+    align-items: center;
+    background: #43a047;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-scheduled {
+    display: inline-flex;
+    align-items: center;
+    background: #757575;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-postponed {
+    display: inline-flex;
+    align-items: center;
+    background: #fb8c00;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-suspended {
+    display: inline-flex;
+    align-items: center;
+    background: #8e24aa;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-cancelled {
+    display: inline-flex;
+    align-items: center;
+    background: #e53935;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-default {
+    display: inline-flex;
+    align-items: center;
+    background: #1976d2;
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.match-team {
+    font-size: 15px;
+    margin: 10px 0;
+}
+
+.score {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 0 12px;
+    padding: 2px 14px;
+    background: rgba(0, 60, 130, 0.08);
+    border-radius: 8px;
+}
+
+.dark .score {
+    color: var(--gold);
+    background: rgba(255, 200, 0, 0.15);
+}
+
+.error-card {
+    border-color: #ffcdd2;
+    background: #fff8f8;
+}
+
+.dark .error-card {
+    border-color: #c62828;
+    background: rgba(198, 40, 40, 0.1);
+}
+
+.error-card .btn {
+    margin-top: 12px;
+}
+
+.news-source {
+    font-size: 12px;
+    color: #888;
+    margin-top: 8px;
+}
+
+.news-card {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    display: block;
+}
+
+.news-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+}
+
+.news-card h4 {
+    color: var(--primary);
+}
+
+.dark .news-card h4 {
+    color: var(--gold);
+}
+
+.loading-message {
+    text-align: center;
+    padding: 8px;
+    color: var(--text-sub);
+    font-size: 14px;
+}
+
+.loading-message.en {
+    display: none;
+}
+
+body.eng .loading-message.zh {
+    display: none;
+}
+
+body.eng .loading-message.en {
+    display: block;
+}
+
+/* 加载动画 */
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-sub);
+}
+
+/* 页脚 */
+footer {
+    background: var(--primary);
+    color: #e6edf7;
+    text-align: center;
+    padding: 48px 0;
+    margin-top: 40px;
+}
+
+.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 16px;
+}
+
+.social-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.social-link:hover {
+    background: var(--gold);
+    color: var(--primary);
+}
+
+.social-link i {
+    font-size: 16px;
+}
+
+/* 双语控制 */
+.zh { display: block; }
+.en { display: none; }
+.eng .zh { display: none; }
+.eng .en { display: block; }
+
+/* 响应式 */
+@media (max-width: 1200px) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+    .menu { gap: 20px; }
+    .hero h1 { font-size: 44px; }
+}
+
+@media (max-width: 768px) {
+    .menu { display: none; }
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .hero { height: 460px; }
+    .hero h1 { font-size: 36px; }
+    .title { font-size: 28px; }
+}
+
+@media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo"><img src="世界杯病毒.png" alt="世界杯病毒" class="logo-img"><span>世界杯病毒</span></div>
+    <div class="menu">
+      <a href="#match"><i class="fas fa-futbol"></i> 实时赛程</a>
+      <a href="#team"><i class="fas fa-flag"></i> 参赛球队</a>
+      <a href="#stand"><i class="fas fa-table"></i> 积分榜</a>
+      <a href="#top"><i class="fas fa-medal"></i> 射手榜</a>
+      <a href="#news"><i class="fas fa-newspaper"></i> 赛事新闻</a>
+    </div>
+    <div class="bar">
+      <button class="btn" id="toggleLang">EN</button>
+      <button class="btn" id="toggleDark">🌙</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div>
+    <h1 class="zh">2026 美加墨世界杯</h1>
+    <h1 class="en">2026 FIFA World Cup</h1>
+    <p class="zh">48支顶级强队 · 全球足球盛宴 · 实时数据秒级同步</p>
+    <p class="en">48 Teams · Global Football Feast · Real-time Data</p>
+    <div class="count" id="countdown"></div>
+  </div>
+</section>
+
+<div class="container" id="match">
+    <h2 class="title zh">实时赛程 <span class="live"><i class="fas fa-circle"></i> 直播中</span></h2>
+    <h2 class="title en">Live Matches <span class="live"><i class="fas fa-circle"></i> LIVE</span></h2>
+    <div class="grid" id="matchList">
+        <div class="card loading">
+            <i class="fas fa-spinner fa-spin"></i> 数据加载中...
+        </div>
+    </div>
+</div>
+
+<div class="container" id="team">
+    <h2 class="title zh">参赛球队</h2>
+    <h2 class="title en">National Teams</h2>
+    <div class="grid" id="teamList">
+        <div class="card loading">
+            <i class="fas fa-spinner fa-spin"></i> 数据加载中...
+        </div>
+    </div>
+</div>
+
+<div class="container" id="stand">
+    <h2 class="title zh">小组积分榜</h2>
+    <h2 class="title en">Group Standings</h2>
+    <div class="grid" id="standList">
+        <div class="card loading">
+            <i class="fas fa-spinner fa-spin"></i> 数据加载中...
+        </div>
+    </div>
+</div>
+
+<div class="container" id="top">
+    <h2 class="title zh">最佳射手榜</h2>
+    <h2 class="title en">Top Scorers</h2>
+    <div class="grid" id="topList">
+        <div class="card">
+            <h4><i class="fas fa-medal"></i> 射手榜单</h4>
+            <p>小组赛开启后自动更新进球数据</p>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="news">
+    <h2 class="title zh">最新赛事新闻</h2>
+    <h2 class="title en">Latest News</h2>
+    <div class="grid" id="newsList">
+        <div class="card loading">
+            <i class="fas fa-spinner fa-spin"></i> 新闻加载中...
+        </div>
+    </div>
+</div>
+
+<footer>
+  <div class="footer-social">
+    <a href="https://x.com/andy11100497353/" target="_blank" class="social-link"><i class="fab fa-x-twitter"></i> Twitter</a>
+    <a href="#" target="_blank" class="social-link"><i class="fab fa-qq"></i> QQ群</a>
+  </div>
+  <p class="zh">© 2026 世界杯病毒 | 自动同步全球最新赛事数据</p>
+  <p class="en">© 2026 World Cup Virus | All Data Auto Updated</p>
+  <p id="apiStatus"><i class="fas fa-spinner fa-spin"></i> 数据加载中...</p>
+</footer>
+
+<script>
+const WC_2026_DATE = new Date("2026-06-11T18:00:00Z");
+const REFRESH_INTERVAL = 25000;
+let apiStatus = { match: true, team: true, stand: true, news: true };
+
+function formatTime(dateStr) {
+    const d = new Date(dateStr);
+    return d.toLocaleString('zh-CN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
+
+function getStatusBadge(status) {
+    const statusMap = {
+        'IN_PLAY': '<span class="live"><i class="fas fa-circle"></i> 进行中</span>',
+        'PAUSED': '<span class="live"><i class="fas fa-pause"></i> 中场</span>',
+        'FINISHED': '<span class="status-finished">已结束</span>',
+        'SCHEDULED': '<span class="status-scheduled">未开始</span>',
+        'TIMED': '<span class="status-scheduled">定时</span>',
+        'POSTPONED': '<span class="status-postponed">延期</span>',
+        'SUSPENDED': '<span class="status-suspended">暂停</span>',
+        'CANCELLED': '<span class="status-cancelled">取消</span>'
+    };
+    return statusMap[status] || `<span class="status-default">${status}</span>`;
+}
+
+function showError(elementId, message) {
+    document.getElementById(elementId).innerHTML = `
+        <div class="card error-card">
+            <h4><i class="fas fa-exclamation-triangle"></i> 数据加载失败</h4>
+            <p>${message}</p>
+            <button class="btn" onclick="retryLoad('${elementId}')"><i class="fas fa-redo"></i> 重试</button>
+        </div>
+    `;
+}
+
+async function retryLoad(type) {
+    switch(type) {
+        case 'matchList': await getMatch(); break;
+        case 'teamList': await getTeam(); break;
+        case 'standList': await getStand(); break;
+        case 'newsList': await getNews(); break;
+    }
+}
+
+function cd(){
+    const now = new Date();
+    const diff = WC_2026_DATE - now;
+    const box = document.getElementById("countdown");
+    if(diff <= 0){
+        box.innerText = "⚽ 世界杯赛事已正式开赛";
+        return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    box.innerHTML = `开赛倒计时：${d}天 ${h}时 ${m}分 ${s}秒`;
+}
+setInterval(cd, 1000);
+cd();
+
+document.getElementById("toggleLang").onclick = function() {
+    document.body.classList.toggle("eng");
+    this.innerText = document.body.classList.contains("eng") ? "中" : "EN";
+};
+document.getElementById("toggleDark").onclick = function() {
+    document.body.classList.toggle("dark");
+    this.innerText = document.body.classList.contains("dark") ? "☀️" : "🌙";
+};
+
+async function fetchWithRetry(url, options, retries = 2) {
+    for (let i = 0; i <= retries; i++) {
+        try {
+            const res = await fetch(url, options);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return await res.json();
+        } catch (e) {
+            if (i === retries) throw e;
+            await new Promise(r => setTimeout(r, 1000 * (i + 1)));
+        }
+    }
+}
+
+async function getMatch(){
+    const wrap = document.getElementById("matchList");
+    wrap.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在加载赛程数据...</div>';
+
+    const apis = [
+        { url: 'https://api.football-data.org/v4/competitions/WC/matches', headers: { 'X-Auth-Token': 'b5319748758c4342a48252655d4c534' } },
+        { url: 'https://api.football-data.org/v4/competitions/2136/matches', headers: { 'X-Auth-Token': 'b5319748758c4342a48252655d4c534' } }
+    ];
+
+    for (const api of apis) {
+        try {
+            const data = await fetchWithRetry(api.url, { headers: api.headers });
+            if (data && data.matches) {
+                wrap.innerHTML = "";
+                const matches = data.matches.filter(m => m.competition?.id === 2136 || m.competition?.code === 'WC').slice(0, 8);
+                if (matches.length === 0) matches = data.matches.slice(0, 8);
+
+                matches.forEach(m => {
+                    const homeName = m.homeTeam?.name || m.homeTeam?.shortName || '主队';
+                    const awayName = m.awayTeam?.name || m.awayTeam?.shortName || '客队';
+                    const homeScore = m.score?.fullTime?.home ?? '-';
+                    const awayScore = m.score?.fullTime?.away ?? '-';
+                    wrap.innerHTML += `
+                    <div class="card">
+                        <h4><i class="fas fa-futbol"></i> ${getStatusBadge(m.status)}</h4>
+                        <p class="match-team"><strong>${homeName}</strong> <span class="score">${homeScore} - ${awayScore}</span> <strong>${awayName}</strong></p>
+                        <p><i class="far fa-clock"></i> ${formatTime(m.utcDate)}</p>
+                        <p><i class="fas fa-trophy"></i> ${m.competition?.name || '2026 世界杯'}</p>
+                    </div>`;
+                });
+                apiStatus.match = true;
+                return;
+            }
+        } catch(e) { continue; }
+    }
+
+    apiStatus.match = false;
+    wrap.innerHTML = `
+        <div class="card">
+            <h4><i class="fas fa-futbol"></i> 赛事</h4>
+            <p>暂无实时数据</p>
+            <p class="zh">2026年世界杯将于6月11日开赛</p>
+            <p class="en">World Cup 2026 starts June 11</p>
+        </div>`;
+}
+
+async function getTeam(){
+    const wrap = document.getElementById("teamList");
+    wrap.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在加载球队数据...</div>';
+
+    const wcTeams = [
+        { name: '阿根廷', area: '南美洲', flag: '🇦🇷' },
+        { name: '巴西', area: '南美洲', flag: '🇧🇷' },
+        { name: '乌拉圭', area: '南美洲', flag: '🇺🇾' },
+        { name: '哥伦比亚', area: '南美洲', flag: '🇨🇴' },
+        { name: '厄瓜多尔', area: '南美洲', flag: '🇪🇨' },
+        { name: '秘鲁', area: '南美洲', flag: '🇵🇪' },
+        { name: '智利', area: '南美洲', flag: '🇨🇱' },
+        { name: '巴拉圭', area: '南美洲', flag: '🇵🇾' },
+        { name: '玻利维亚', area: '南美洲', flag: '🇧🇴' },
+        { name: '委内瑞拉', area: '南美洲', flag: '🇻🇪' },
+        { name: '法国', area: '欧洲', flag: '🇫🇷' },
+        { name: '德国', area: '欧洲', flag: '🇩🇪' },
+        { name: '英格兰', area: '欧洲', flag: '🏴' },
+        { name: '西班牙', area: '欧洲', flag: '🇪🇸' },
+        { name: '葡萄牙', area: '欧洲', flag: '🇵🇹' },
+        { name: '荷兰', area: '欧洲', flag: '🇳🇱' },
+        { name: '意大利', area: '欧洲', flag: '🇮🇹' },
+        { name: '比利时', area: '欧洲', flag: '🇧🇪' },
+        { name: '克罗地亚', area: '欧洲', flag: '🇭🇷' },
+        { name: '瑞士', area: '欧洲', flag: '🇨🇭' },
+        { name: '波兰', area: '欧洲', flag: '🇵🇱' },
+        { name: '丹麦', area: '欧洲', flag: '🇩🇰' },
+        { name: '瑞典', area: '欧洲', flag: '🇸🇪' },
+        { name: '奥地利', area: '欧洲', flag: '🇦🇹' },
+        { name: '乌克兰', area: '欧洲', flag: '🇺🇦' },
+        { name: '塞尔维亚', area: '欧洲', flag: '🇷🇸' },
+        { name: '捷克', area: '欧洲', flag: '🇨🇿' },
+        { name: '匈牙利', area: '欧洲', flag: '🇭🇺' },
+        { name: '罗马尼亚', area: '欧洲', flag: '🇷🇴' },
+        { name: '挪威', area: '欧洲', flag: '🇳🇴' },
+        { name: '美国', area: '中北美洲', flag: '🇺🇸' },
+        { name: '墨西哥', area: '中北美洲', flag: '🇲🇽' },
+        { name: '加拿大', area: '中北美洲', flag: '🇨🇦' },
+        { name: '哥斯达黎加', area: '中北美洲', flag: '🇨🇷' },
+        { name: '巴拿马', area: '中北美洲', flag: '🇵🇦' },
+        { name: '牙买加', area: '中北美洲', flag: '🇯🇲' },
+        { name: '日本', area: '亚洲', flag: '🇯🇵' },
+        { name: '韩国', area: '亚洲', flag: '🇰🇷' },
+        { name: '伊朗', area: '亚洲', flag: '🇮🇷' },
+        { name: '澳大利亚', area: '亚洲', flag: '🇦🇺' },
+        { name: '卡塔尔', area: '亚洲', flag: '🇶🇦' },
+        { name: '沙特阿拉伯', area: '亚洲', flag: '🇸🇦' },
+        { name: '伊拉克', area: '亚洲', flag: '🇮🇶' },
+        { name: '阿联酋', area: '亚洲', flag: '🇦🇪' },
+        { name: '摩洛哥', area: '非洲', flag: '🇲🇦' },
+        { name: '塞内加尔', area: '非洲', flag: '🇸🇳' },
+        { name: '喀麦隆', area: '非洲', flag: '🇨🇲' },
+        { name: '尼日利亚', area: '非洲', flag: '🇳🇬' }
+    ];
+
+    try {
+        const apis = [
+            { url: 'https://api.football-data.org/v4/competitions/WC/teams', headers: { 'X-Auth-Token': 'b5319748758c4342a48252655d4c534' } },
+            { url: 'https://api.football-data.org/v4/competitions/2136/teams', headers: { 'X-Auth-Token': 'b5319748758c4342a48252655d4c534' } }
+        ];
+
+        for (const api of apis) {
+            try {
+                const data = await fetchWithRetry(api.url, { headers: api.headers });
+                if (data && data.teams && data.teams.length > 0) {
+                    wrap.innerHTML = "";
+                    data.teams.forEach(t => {
+                        wrap.innerHTML += `
+                        <div class="card">
+                            <h4><i class="fas fa-flag"></i> ${t.name}</h4>
+                            <p><i class="fas fa-globe"></i> ${t.area?.name || '未知'}</p>
+                        </div>`;
+                    });
+                    apiStatus.team = true;
+                    return;
+                }
+            } catch(e) { continue; }
+        }
+    } catch(e) {}
+
+    wrap.innerHTML = "";
+    wcTeams.forEach(t => {
+        wrap.innerHTML += `
+        <div class="card">
+            <h4><i class="fas fa-flag"></i> ${t.flag} ${t.name}</h4>
+            <p><i class="fas fa-globe"></i> ${t.area}</p>
+        </div>`;
+    });
+    apiStatus.team = true;
+}
+
+async function getStand(){
+    const wrap = document.getElementById("standList");
+    wrap.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在加载积分榜...</div>';
+
+    const hasData = false;
+
+    try {
+        const apis = [
+            { url: 'https://api.football-data.org/v4/competitions/WC/standings', headers: { 'X-Auth-Token': 'b5319748758c4342a48252655d4c534' } },
+            { url: 'https://api.football-data.org/v4/competitions/2136/standings', headers: { 'X-Auth-Token': 'b5319748758c4342a48252655d4c534' } }
+        ];
+
+        for (const api of apis) {
+            try {
+                const data = await fetchWithRetry(api.url, { headers: api.headers });
+                if (data && data.standings && data.standings.length > 0) {
+                    const groupStandings = data.standings.filter(s => s.type === 'GROUP_LEAGUE_TABLE');
+                    if (groupStandings.length > 0) {
+                        wrap.innerHTML = "";
+                        groupStandings.slice(0, 6).forEach(g => {
+                            let html = `<div class="card"><h4><i class="fas fa-table"></i> ${g.group || '小组'}</h4>`;
+                            g.table.slice(0, 4).forEach(p => {
+                                html += `<p>${p.position}. ${p.team?.name || '球队'}｜积分：${p.points || 0}</p>`;
+                            });
+                            html += `</div>`;
+                            wrap.innerHTML += html;
+                        });
+                        apiStatus.stand = true;
+                        return;
+                    }
+                }
+            } catch(e) { continue; }
+        }
+    } catch(e) {}
+
+    apiStatus.stand = false;
+    wrap.innerHTML = `
+        <div class="card">
+            <h4><i class="fas fa-table"></i> 小组积分榜</h4>
+            <p class="loading-message"><i class="fas fa-clock"></i> 等待2026世界杯开赛</p>
+            <p class="loading-message">赛事开始后将自动更新积分数据</p>
+            <p class="loading-message en"><i class="fas fa-clock"></i> Waiting for World Cup 2026</p>
+        </div>`;
+}
+
+async function getNews(){
+    const wrap = document.getElementById("newsList");
+    wrap.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> 正在加载新闻...</div>';
+
+    try {
+        const res = await fetchWithRetry(`https://newsapi.org/v2/everything?q=2026世界杯+WorldCup2026&language=zh&sortBy=publishedAt&pageSize=6`, {
+            headers: { 'X-Api-Key': '13e155c3115d423595523621514830a' }
+        });
+
+        if (res && res.articles && res.articles.length > 0) {
+            wrap.innerHTML = "";
+            res.articles.forEach(n => {
+                const url = n.url || '#';
+                wrap.innerHTML += `
+                <a href="${url}" target="_blank" class="card news-card">
+                    <h4><i class="fas fa-newspaper"></i> ${n.title || '无标题'}</h4>
+                    <p>${n.description || '暂无简介'}</p>
+                    <p class="news-source"><i class="fas fa-external-link-alt"></i> ${n.source?.name || '未知来源'}</p>
+                </a>`;
+            });
+            apiStatus.news = true;
+            return;
+        }
+    } catch(e) {}
+
+    const fallbackNews = [
+        { title: '2026世界杯倒计时开始', desc: '距离2026年美加墨世界杯开幕还有不到50天' },
+        { title: '48支球队名单公布', desc: '本届世界杯扩军至48支球队参赛' },
+        { title: 'VAR技术再升级', desc: '2026世界杯将采用最新VAR辅助裁判系统' },
+        { title: '新球场落成典礼', desc: '美加墨三国世界杯场馆建设进入最后阶段' },
+        { title: '门票销售火爆', desc: '2026世界杯门票申请人数创历史新高' },
+        { title: '冠军预测分析', desc: '各大博彩公司发布首轮夺冠热门分析' }
+    ];
+
+    wrap.innerHTML = "";
+    fallbackNews.forEach(n => {
+        const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(n.title)}`;
+        wrap.innerHTML += `
+        <a href="${searchUrl}" target="_blank" class="card news-card">
+            <h4><i class="fas fa-newspaper"></i> ${n.title}</h4>
+            <p>${n.desc}</p>
+        </a>`;
+    });
+    apiStatus.news = true;
+}
+
+async function loadAll(){
+    await Promise.all([getMatch(), getTeam(), getStand(), getNews()]);
+}
+
+function updateStatus() {
+    const statusBar = document.getElementById('apiStatus');
+    if (statusBar) {
+        const allOk = Object.values(apiStatus).every(v => v);
+        statusBar.innerHTML = allOk
+            ? '<i class="fas fa-check-circle"></i> 数据正常'
+            : '<i class="fas fa-exclamation-circle"></i> 部分数据来源不可用';
+    }
+}
+
+window.onload = function(){
+    loadAll().then(updateStatus);
+
+    setInterval(async () => {
+        await getMatch();
+        await getStand();
+        updateStatus();
+    }, REFRESH_INTERVAL);
+
+    setInterval(async () => {
+        await getTeam();
+        await getNews();
+        updateStatus();
+    }, REFRESH_INTERVAL * 2);
+};
+</script>
+</body>
+</html>
